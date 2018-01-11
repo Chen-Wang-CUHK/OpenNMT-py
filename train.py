@@ -221,6 +221,12 @@ def tally_parameters(model):
     print('decoder: ', dec)
 
 
+def print_trainable_parameters(model):
+    n_trainable_params = sum([p.nelement() for p in model.parameters() if p.requires_grad])
+    print('* number of trainable parameters: %d' % n_trainable_params)
+    for name, param in model.named_parameters():
+        print('{} : {}, trainable = {}'.format(name, param.data.shape, param.requires_grad))
+
 def load_dataset(data_type):
     assert data_type in ["train", "valid"]
 
@@ -348,6 +354,7 @@ def main():
     # Build model.
     model = build_model(model_opt, opt, fields, checkpoint)
     tally_parameters(model)
+    print_trainable_parameters(model)
     check_save_model_path()
 
     # Build optimizer.

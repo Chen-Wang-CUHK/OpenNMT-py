@@ -1,0 +1,28 @@
+From: /research/king2/yfgao/nqg_attn/processed_data/nqg_ACL17/nqg.vocab.pt
+	* source vocab: 45002 words
+	* target vocab: 28004 words
+Got 2196007 embeddings from /research/king2/yfgao/datasets/glove.840B.300d.txt
+) translated
+( translated
+] translated
+[ translated
+{ translated
+} translated
+( translated
+) translated
+[ translated
+] translated
+
+Matching: 
+	* enc: 38048 match, 6954 missing, (84.55%)
+	* dec: 24673 match, 3331 missing, (88.11%)
+
+Filtered embeddings:
+	* enc:  torch.Size([45002, 300])
+	* dec:  torch.Size([28004, 300])
+
+Saving embedding as:
+	* enc: /research/king2/yfgao/nqg_attn/embeddings/embeded.enc.pt
+	* dec: /research/king2/yfgao/nqg_attn/embeddings/embeded.dec.pt
+
+Done.
