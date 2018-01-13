@@ -140,6 +140,76 @@ class RNNEncoder(EncoderBase):
 
         return hidden_t, outputs
 
+class TF_BiRNNEncoder(EncoderBase):
+    """Bi-directional RNN tensorflow like RNN encoder:
+    train two multilayer uni-directional RNN with input seq and
+    inversed seq, then concat them afterwards"""
+    def __init__(self, rnn_type, num_layers, hidden_size,
+                 dropout, embeddings):
+        super(TF_BiRNNEncoder, self).__init__()
+
+        hidden_size = hidden_size // 2
+        self.embeddings = embeddings
+        self.no_pack_padded_seq = False
+        self.bidirectional = False
+
+        self.rnn_fw = getattr(nn, rnn_type)(  # getattr(nn, rnn_type) = torch.nn.modules.rnn.LSTM
+                input_size=embeddings.embedding_size,
+                hidden_size=hidden_size,
+                num_layers=num_layers,
+                dropout=dropout,
+                bidirectional=self.bidirectional)
+        self.rnn_bw = getattr(nn, rnn_type)(  # getattr(nn, rnn_type) = torch.nn.modules.rnn.LSTM
+                input_size=embeddings.embedding_size,
+                hidden_size=hidden_size,
+                num_layers=num_layers,
+                dropout=dropout,
+                bidirectional=self.bidirectional)
+
+    def forward(self, input, lengths=None, hidden=None):
+        """train fw and bw separately and then concatenate"""
+        self._check_args(input, lengths, hidden)
+
+        input_reversed = []
+        lengths = lengths.view(-1).tolist()
+        for i, l in enumerate(lengths):
+            idx_reversed = [j for j in range(l-1, -1, -1)]
+            while len(idx_reversed) < input.size(0):
+                idx_reversed.append(1) # PAD index may change
+            idx_reversed = Variable(torch.LongTensor(idx_reversed), requires_grad=False).cuda()
+            input_reversed.append(input[:,i,:].index_select(0, idx_reversed))
+        input_reversed = torch.cat(input_reversed, 1)
+        input_reversed = input_reversed.unsqueeze(-1)
+        emb = self.embeddings(input)
+        emb_reversed = self.embeddings(input_reversed)
+        s_len, batch, emb_dim = emb.size()
+        s_len_reversed, batch_reversed, emb_dim_reversed = emb_reversed.size()
+
+        packed_emb = emb
+        if lengths is not None and not self.no_pack_padded_seq:
+            # Lengths data is wrapped inside a Variable.
+            packed_emb = pack(emb, lengths)
+        packed_emb_reversed = emb_reversed
+        if lengths is not None and not self.no_pack_padded_seq:
+            # Lengths data is wrapped inside a Variable.
+            packed_emb_reversed = pack(emb_reversed, lengths)
+
+        outputs_fw, hidden_t_fw = self.rnn_fw(packed_emb, hidden)
+        outputs_bw, hidden_t_bw = self.rnn_bw(packed_emb_reversed, hidden)
+
+        if lengths is not None and not self.no_pack_padded_seq:
+            outputs_fw = unpack(outputs_fw)[0]
+            outputs_bw = unpack(outputs_bw)[0]
+
+        outputs = torch.cat((outputs_fw, outputs_bw), -1)
+        hidden_t = []
+        hidden_t.append(torch.stack((hidden_t_fw[0][0,:,:], hidden_t_bw[0][0,:,:],
+                                   hidden_t_fw[0][1, :, :],hidden_t_bw[0][1,:,:]), 0))
+        hidden_t.append(torch.stack((hidden_t_fw[1][0, :, :], hidden_t_bw[1][0, :, :],
+                                   hidden_t_fw[1][1, :, :], hidden_t_bw[1][1, :, :]), 0))
+        hidden_t = tuple(hidden_t)
+
+        return hidden_t, outputs
 
 class RNNDecoderBase(nn.Module):
     """

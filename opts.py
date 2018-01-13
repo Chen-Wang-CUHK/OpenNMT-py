@@ -113,6 +113,14 @@ def model_opts(parser):
     group.add_argument('-lambda_coverage', type=float, default=1,
                        help='Lambda value for coverage.')
 
+    # Yifan added options:
+    group = parser.add_argument_group('Yifan added options')
+    group.add_argument('-birnn_type', type=str, default='pytorch',
+                       choices=['pytorch', 'tensorflow'],
+                       help="""Use tensorflow version birnn: train two multilayer rnn
+                       and then concatenate; or use pytorch version birnn, concatenate
+                       after the first layer and then feed into later layers.""")
+
 
 def preprocess_opts(parser):
     # Data options

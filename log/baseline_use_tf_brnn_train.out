@@ -1,0 +1,484 @@
+Loading train data from 'processed_data/nqg_ACL17/nqg'
+ * number of train sentences: 69979
+Loading valid data from 'processed_data/nqg_ACL17/nqg'
+ * number of valid sentences: 10440
+ * maximum batch size: 64
+ * vocabulary size. source = 45002; target = 28004
+Building model...
+Intializing model parameters.
+NMTModel(
+  (encoder): TF_BiRNNEncoder(
+    (embeddings): Embeddings(
+      (make_embedding): Sequential(
+        (emb_luts): Elementwise(
+          (0): Embedding(45002, 300, padding_idx=1)
+        )
+      )
+    )
+    (rnn_fw): LSTM(300, 300, num_layers=2, dropout=0.3)
+    (rnn_bw): LSTM(300, 300, num_layers=2, dropout=0.3)
+  )
+  (decoder): InputFeedRNNDecoder(
+    (embeddings): Embeddings(
+      (make_embedding): Sequential(
+        (emb_luts): Elementwise(
+          (0): Embedding(28004, 300, padding_idx=1)
+        )
+      )
+    )
+    (dropout): Dropout(p=0.3)
+    (rnn): StackedLSTM(
+      (dropout): Dropout(p=0.3)
+      (layers): ModuleList(
+        (0): LSTMCell(900, 600)
+        (1): LSTMCell(600, 600)
+      )
+    )
+    (attn): GlobalAttention(
+      (linear_in): Linear(in_features=600, out_features=600)
+      (linear_out): Linear(in_features=1200, out_features=600)
+      (sm): Softmax()
+      (tanh): Tanh()
+    )
+  )
+  (generator): Sequential(
+    (0): Linear(in_features=600, out_features=28004)
+    (1): LogSoftmax()
+  )
+)
+* number of parameters: 49191404
+encoder:  16390200
+decoder:  32801204
+* number of trainable parameters: 27289604
+encoder.embeddings.make_embedding.emb_luts.0.weight : torch.Size([45002, 300]), trainable = False
+encoder.rnn_fw.weight_ih_l0 : torch.Size([1200, 300]), trainable = True
+encoder.rnn_fw.weight_hh_l0 : torch.Size([1200, 300]), trainable = True
+encoder.rnn_fw.bias_ih_l0 : torch.Size([1200]), trainable = True
+encoder.rnn_fw.bias_hh_l0 : torch.Size([1200]), trainable = True
+encoder.rnn_fw.weight_ih_l1 : torch.Size([1200, 300]), trainable = True
+encoder.rnn_fw.weight_hh_l1 : torch.Size([1200, 300]), trainable = True
+encoder.rnn_fw.bias_ih_l1 : torch.Size([1200]), trainable = True
+encoder.rnn_fw.bias_hh_l1 : torch.Size([1200]), trainable = True
+encoder.rnn_bw.weight_ih_l0 : torch.Size([1200, 300]), trainable = True
+encoder.rnn_bw.weight_hh_l0 : torch.Size([1200, 300]), trainable = True
+encoder.rnn_bw.bias_ih_l0 : torch.Size([1200]), trainable = True
+encoder.rnn_bw.bias_hh_l0 : torch.Size([1200]), trainable = True
+encoder.rnn_bw.weight_ih_l1 : torch.Size([1200, 300]), trainable = True
+encoder.rnn_bw.weight_hh_l1 : torch.Size([1200, 300]), trainable = True
+encoder.rnn_bw.bias_ih_l1 : torch.Size([1200]), trainable = True
+encoder.rnn_bw.bias_hh_l1 : torch.Size([1200]), trainable = True
+decoder.embeddings.make_embedding.emb_luts.0.weight : torch.Size([28004, 300]), trainable = False
+decoder.rnn.layers.0.weight_ih : torch.Size([2400, 900]), trainable = True
+decoder.rnn.layers.0.weight_hh : torch.Size([2400, 600]), trainable = True
+decoder.rnn.layers.0.bias_ih : torch.Size([2400]), trainable = True
+decoder.rnn.layers.0.bias_hh : torch.Size([2400]), trainable = True
+decoder.rnn.layers.1.weight_ih : torch.Size([2400, 600]), trainable = True
+decoder.rnn.layers.1.weight_hh : torch.Size([2400, 600]), trainable = True
+decoder.rnn.layers.1.bias_ih : torch.Size([2400]), trainable = True
+decoder.rnn.layers.1.bias_hh : torch.Size([2400]), trainable = True
+decoder.attn.linear_in.weight : torch.Size([600, 600]), trainable = True
+decoder.attn.linear_out.weight : torch.Size([600, 1200]), trainable = True
+generator.0.weight : torch.Size([28004, 600]), trainable = True
+generator.0.bias : torch.Size([28004]), trainable = True
+
+/research/king2/yfgao/nqg_attn/onmt/modules/GlobalAttention.py:177: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  align_vectors = self.sm(align.view(batch*targetL, sourceL))
+/research/king2/yfgao/pytorch0.3.0_py3.6/lib/python3.6/site-packages/torch/nn/modules/container.py:67: UserWarning: Implicit dimension choice for log_softmax has been deprecated. Change the call to include dim=X as an argument.
+  input = module(input)
+Epoch  1,    50/ 1094; acc:   9.77; ppl: 71122.05; 11152 src tok/s; 4180 tgt tok/s;      9 s elapsed
+Epoch  1,   100/ 1094; acc:  15.27; ppl: 4183.63; 11937 src tok/s; 4631 tgt tok/s;     18 s elapsed
+Epoch  1,   150/ 1094; acc:  17.44; ppl: 1197.83; 12109 src tok/s; 4482 tgt tok/s;     27 s elapsed
+Epoch  1,   200/ 1094; acc:  19.33; ppl: 715.24; 11385 src tok/s; 4467 tgt tok/s;     35 s elapsed
+Epoch  1,   250/ 1094; acc:  21.66; ppl: 477.75; 11827 src tok/s; 4393 tgt tok/s;     44 s elapsed
+Epoch  1,   300/ 1094; acc:  22.79; ppl: 402.12; 11888 src tok/s; 4538 tgt tok/s;     53 s elapsed
+Epoch  1,   350/ 1094; acc:  24.00; ppl: 326.13; 12213 src tok/s; 4386 tgt tok/s;     62 s elapsed
+Epoch  1,   400/ 1094; acc:  25.81; ppl: 277.90; 11624 src tok/s; 4774 tgt tok/s;     70 s elapsed
+Epoch  1,   450/ 1094; acc:  25.18; ppl: 268.33; 12488 src tok/s; 4538 tgt tok/s;     79 s elapsed
+Epoch  1,   500/ 1094; acc:  26.89; ppl: 243.17; 11941 src tok/s; 4842 tgt tok/s;     87 s elapsed
+Epoch  1,   550/ 1094; acc:  26.91; ppl: 220.54; 11593 src tok/s; 4599 tgt tok/s;     95 s elapsed
+Epoch  1,   600/ 1094; acc:  27.52; ppl: 207.60; 12756 src tok/s; 4646 tgt tok/s;    104 s elapsed
+Epoch  1,   650/ 1094; acc:  27.31; ppl: 201.86; 12226 src tok/s; 4596 tgt tok/s;    113 s elapsed
+Epoch  1,   700/ 1094; acc:  28.08; ppl: 194.98; 11626 src tok/s; 4657 tgt tok/s;    121 s elapsed
+Epoch  1,   750/ 1094; acc:  28.71; ppl: 179.61; 12375 src tok/s; 4585 tgt tok/s;    130 s elapsed
+Epoch  1,   800/ 1094; acc:  29.02; ppl: 171.83; 11910 src tok/s; 4730 tgt tok/s;    138 s elapsed
+Epoch  1,   850/ 1094; acc:  29.06; ppl: 162.71; 11948 src tok/s; 4590 tgt tok/s;    147 s elapsed
+Epoch  1,   900/ 1094; acc:  29.33; ppl: 156.05; 11733 src tok/s; 4485 tgt tok/s;    155 s elapsed
+Epoch  1,   950/ 1094; acc:  29.67; ppl: 147.77; 10957 src tok/s; 4641 tgt tok/s;    164 s elapsed
+Epoch  1,  1000/ 1094; acc:  29.55; ppl: 145.54; 13210 src tok/s; 4566 tgt tok/s;    172 s elapsed
+Epoch  1,  1050/ 1094; acc:  30.59; ppl: 136.73; 11912 src tok/s; 4647 tgt tok/s;    181 s elapsed
+Train perplexity: 361.344
+Train accuracy: 25.1494
+Validation perplexity: 136.47
+Validation accuracy: 29.6382
+
+Epoch  2,    50/ 1094; acc:  30.78; ppl: 123.07; 11182 src tok/s; 4453 tgt tok/s;      9 s elapsed
+Epoch  2,   100/ 1094; acc:  30.56; ppl: 124.40; 12363 src tok/s; 4564 tgt tok/s;     17 s elapsed
+Epoch  2,   150/ 1094; acc:  30.87; ppl: 117.49; 12094 src tok/s; 4599 tgt tok/s;     26 s elapsed
+Epoch  2,   200/ 1094; acc:  30.95; ppl: 115.04; 12053 src tok/s; 4593 tgt tok/s;     35 s elapsed
+Epoch  2,   250/ 1094; acc:  31.39; ppl: 108.55; 12493 src tok/s; 4518 tgt tok/s;     43 s elapsed
+Epoch  2,   300/ 1094; acc:  31.95; ppl: 102.61; 11415 src tok/s; 4610 tgt tok/s;     52 s elapsed
+Epoch  2,   350/ 1094; acc:  32.04; ppl: 101.21; 11901 src tok/s; 4548 tgt tok/s;     61 s elapsed
+Epoch  2,   400/ 1094; acc:  32.62; ppl:  94.44; 12274 src tok/s; 4619 tgt tok/s;     69 s elapsed
+Epoch  2,   450/ 1094; acc:  32.05; ppl:  98.65; 12076 src tok/s; 4607 tgt tok/s;     77 s elapsed
+Epoch  2,   500/ 1094; acc:  32.49; ppl:  92.94; 11908 src tok/s; 4503 tgt tok/s;     86 s elapsed
+Epoch  2,   550/ 1094; acc:  32.78; ppl:  92.69; 11552 src tok/s; 4468 tgt tok/s;     95 s elapsed
+Epoch  2,   600/ 1094; acc:  32.73; ppl:  92.30; 12167 src tok/s; 4594 tgt tok/s;    104 s elapsed
+Epoch  2,   650/ 1094; acc:  32.85; ppl:  86.87; 11829 src tok/s; 4643 tgt tok/s;    112 s elapsed
+Epoch  2,   700/ 1094; acc:  33.57; ppl:  84.58; 12191 src tok/s; 4526 tgt tok/s;    121 s elapsed
+Epoch  2,   750/ 1094; acc:  33.54; ppl:  83.76; 12402 src tok/s; 4565 tgt tok/s;    129 s elapsed
+Epoch  2,   800/ 1094; acc:  33.76; ppl:  80.61; 11516 src tok/s; 4643 tgt tok/s;    138 s elapsed
+Epoch  2,   850/ 1094; acc:  33.49; ppl:  79.90; 11552 src tok/s; 4529 tgt tok/s;    147 s elapsed
+Epoch  2,   900/ 1094; acc:  34.24; ppl:  76.11; 12035 src tok/s; 4569 tgt tok/s;    155 s elapsed
+Epoch  2,   950/ 1094; acc:  34.24; ppl:  76.59; 11529 src tok/s; 4576 tgt tok/s;    164 s elapsed
+Epoch  2,  1000/ 1094; acc:  33.90; ppl:  75.55; 12319 src tok/s; 4523 tgt tok/s;    172 s elapsed
+Epoch  2,  1050/ 1094; acc:  34.70; ppl:  71.88; 11643 src tok/s; 4504 tgt tok/s;    181 s elapsed
+Train perplexity: 92.0736
+Train accuracy: 32.7066
+Validation perplexity: 73.8238
+Validation accuracy: 33.65
+
+Epoch  3,    50/ 1094; acc:  35.02; ppl:  63.48; 11873 src tok/s; 4477 tgt tok/s;      9 s elapsed
+Epoch  3,   100/ 1094; acc:  35.37; ppl:  61.62; 11992 src tok/s; 4575 tgt tok/s;     17 s elapsed
+Epoch  3,   150/ 1094; acc:  35.46; ppl:  60.47; 12371 src tok/s; 4648 tgt tok/s;     26 s elapsed
+Epoch  3,   200/ 1094; acc:  35.36; ppl:  60.99; 11884 src tok/s; 4651 tgt tok/s;     34 s elapsed
+Epoch  3,   250/ 1094; acc:  35.76; ppl:  58.23; 12361 src tok/s; 4600 tgt tok/s;     43 s elapsed
+Epoch  3,   300/ 1094; acc:  35.57; ppl:  58.51; 12313 src tok/s; 4764 tgt tok/s;     51 s elapsed
+Epoch  3,   350/ 1094; acc:  35.86; ppl:  58.05; 11342 src tok/s; 4542 tgt tok/s;     60 s elapsed
+Epoch  3,   400/ 1094; acc:  35.88; ppl:  56.80; 12282 src tok/s; 4550 tgt tok/s;     69 s elapsed
+Epoch  3,   450/ 1094; acc:  36.61; ppl:  53.40; 12404 src tok/s; 4449 tgt tok/s;     77 s elapsed
+Epoch  3,   500/ 1094; acc:  36.84; ppl:  53.19; 11623 src tok/s; 4702 tgt tok/s;     86 s elapsed
+Epoch  3,   550/ 1094; acc:  36.70; ppl:  53.33; 11943 src tok/s; 4472 tgt tok/s;     94 s elapsed
+Epoch  3,   600/ 1094; acc:  36.60; ppl:  52.31; 11831 src tok/s; 4614 tgt tok/s;    103 s elapsed
+Epoch  3,   650/ 1094; acc:  37.10; ppl:  51.09; 11832 src tok/s; 4598 tgt tok/s;    111 s elapsed
+Epoch  3,   700/ 1094; acc:  36.85; ppl:  51.29; 11984 src tok/s; 4488 tgt tok/s;    120 s elapsed
+Epoch  3,   750/ 1094; acc:  36.61; ppl:  52.27; 12369 src tok/s; 4606 tgt tok/s;    129 s elapsed
+Epoch  3,   800/ 1094; acc:  38.10; ppl:  48.39; 11928 src tok/s; 4659 tgt tok/s;    137 s elapsed
+Epoch  3,   850/ 1094; acc:  37.88; ppl:  48.65; 11503 src tok/s; 4587 tgt tok/s;    146 s elapsed
+Epoch  3,   900/ 1094; acc:  37.30; ppl:  48.40; 11713 src tok/s; 4407 tgt tok/s;    155 s elapsed
+Epoch  3,   950/ 1094; acc:  37.60; ppl:  48.05; 11767 src tok/s; 4462 tgt tok/s;    164 s elapsed
+Epoch  3,  1000/ 1094; acc:  37.51; ppl:  47.78; 11785 src tok/s; 4458 tgt tok/s;    172 s elapsed
+Epoch  3,  1050/ 1094; acc:  38.23; ppl:  45.51; 11365 src tok/s; 4487 tgt tok/s;    181 s elapsed
+Train perplexity: 53.2357
+Train accuracy: 36.6622
+Validation perplexity: 51.0666
+Validation accuracy: 37.732
+
+Epoch  4,    50/ 1094; acc:  39.39; ppl:  37.13; 12238 src tok/s; 4478 tgt tok/s;      9 s elapsed
+Epoch  4,   100/ 1094; acc:  40.25; ppl:  36.11; 11583 src tok/s; 4638 tgt tok/s;     17 s elapsed
+Epoch  4,   150/ 1094; acc:  39.80; ppl:  36.19; 11678 src tok/s; 4584 tgt tok/s;     26 s elapsed
+Epoch  4,   200/ 1094; acc:  39.68; ppl:  37.41; 12249 src tok/s; 4571 tgt tok/s;     34 s elapsed
+Epoch  4,   250/ 1094; acc:  40.11; ppl:  36.48; 11570 src tok/s; 4651 tgt tok/s;     43 s elapsed
+Epoch  4,   300/ 1094; acc:  39.97; ppl:  36.06; 12339 src tok/s; 4482 tgt tok/s;     52 s elapsed
+Epoch  4,   350/ 1094; acc:  40.26; ppl:  36.87; 12753 src tok/s; 4474 tgt tok/s;     60 s elapsed
+Epoch  4,   400/ 1094; acc:  40.17; ppl:  35.79; 11581 src tok/s; 4762 tgt tok/s;     69 s elapsed
+Epoch  4,   450/ 1094; acc:  39.78; ppl:  36.91; 12525 src tok/s; 4433 tgt tok/s;     78 s elapsed
+Epoch  4,   500/ 1094; acc:  39.82; ppl:  35.85; 11220 src tok/s; 4656 tgt tok/s;     86 s elapsed
+Epoch  4,   550/ 1094; acc:  40.02; ppl:  36.72; 11901 src tok/s; 4528 tgt tok/s;     95 s elapsed
+Epoch  4,   600/ 1094; acc:  40.23; ppl:  35.47; 11784 src tok/s; 4548 tgt tok/s;    103 s elapsed
+Epoch  4,   650/ 1094; acc:  39.96; ppl:  36.09; 11969 src tok/s; 4559 tgt tok/s;    112 s elapsed
+Epoch  4,   700/ 1094; acc:  40.24; ppl:  35.20; 12128 src tok/s; 4590 tgt tok/s;    121 s elapsed
+Epoch  4,   750/ 1094; acc:  40.35; ppl:  34.93; 11943 src tok/s; 4475 tgt tok/s;    129 s elapsed
+Epoch  4,   800/ 1094; acc:  40.65; ppl:  34.84; 11186 src tok/s; 4452 tgt tok/s;    138 s elapsed
+Epoch  4,   850/ 1094; acc:  40.91; ppl:  33.77; 11225 src tok/s; 4471 tgt tok/s;    147 s elapsed
+Epoch  4,   900/ 1094; acc:  41.20; ppl:  33.37; 12166 src tok/s; 4478 tgt tok/s;    156 s elapsed
+Epoch  4,   950/ 1094; acc:  40.16; ppl:  34.94; 12468 src tok/s; 4423 tgt tok/s;    165 s elapsed
+Epoch  4,  1000/ 1094; acc:  41.34; ppl:  32.83; 11063 src tok/s; 4656 tgt tok/s;    173 s elapsed
+Epoch  4,  1050/ 1094; acc:  41.14; ppl:  33.21; 12125 src tok/s; 4480 tgt tok/s;    182 s elapsed
+Train perplexity: 35.4153
+Train accuracy: 40.2919
+Validation perplexity: 42.4484
+Validation accuracy: 37.7212
+
+Epoch  5,    50/ 1094; acc:  43.36; ppl:  26.19; 11914 src tok/s; 4554 tgt tok/s;      9 s elapsed
+Epoch  5,   100/ 1094; acc:  42.93; ppl:  26.55; 12103 src tok/s; 4546 tgt tok/s;     17 s elapsed
+Epoch  5,   150/ 1094; acc:  42.34; ppl:  28.01; 12169 src tok/s; 4481 tgt tok/s;     26 s elapsed
+Epoch  5,   200/ 1094; acc:  43.19; ppl:  26.08; 11420 src tok/s; 4578 tgt tok/s;     35 s elapsed
+Epoch  5,   250/ 1094; acc:  43.00; ppl:  26.33; 11603 src tok/s; 4505 tgt tok/s;     43 s elapsed
+Epoch  5,   300/ 1094; acc:  42.83; ppl:  26.68; 11618 src tok/s; 4531 tgt tok/s;     52 s elapsed
+Epoch  5,   350/ 1094; acc:  42.27; ppl:  27.45; 12615 src tok/s; 4535 tgt tok/s;     61 s elapsed
+Epoch  5,   400/ 1094; acc:  43.11; ppl:  26.29; 11182 src tok/s; 4590 tgt tok/s;     69 s elapsed
+Epoch  5,   450/ 1094; acc:  43.00; ppl:  26.47; 11587 src tok/s; 4587 tgt tok/s;     78 s elapsed
+Epoch  5,   500/ 1094; acc:  43.77; ppl:  25.23; 12507 src tok/s; 4673 tgt tok/s;     86 s elapsed
+Epoch  5,   550/ 1094; acc:  42.86; ppl:  26.51; 12187 src tok/s; 4569 tgt tok/s;     95 s elapsed
+Epoch  5,   600/ 1094; acc:  42.80; ppl:  27.14; 11977 src tok/s; 4617 tgt tok/s;    103 s elapsed
+Epoch  5,   650/ 1094; acc:  43.24; ppl:  26.02; 12026 src tok/s; 4445 tgt tok/s;    112 s elapsed
+Epoch  5,   700/ 1094; acc:  43.56; ppl:  26.04; 11608 src tok/s; 4461 tgt tok/s;    121 s elapsed
+Epoch  5,   750/ 1094; acc:  43.20; ppl:  26.17; 12209 src tok/s; 4508 tgt tok/s;    130 s elapsed
+Epoch  5,   800/ 1094; acc:  43.13; ppl:  26.42; 11727 src tok/s; 4672 tgt tok/s;    138 s elapsed
+Epoch  5,   850/ 1094; acc:  43.64; ppl:  25.86; 11020 src tok/s; 4484 tgt tok/s;    147 s elapsed
+Epoch  5,   900/ 1094; acc:  42.85; ppl:  26.77; 12406 src tok/s; 4481 tgt tok/s;    156 s elapsed
+Epoch  5,   950/ 1094; acc:  43.40; ppl:  25.39; 11722 src tok/s; 4428 tgt tok/s;    165 s elapsed
+Epoch  5,  1000/ 1094; acc:  43.40; ppl:  26.62; 12159 src tok/s; 4614 tgt tok/s;    173 s elapsed
+Epoch  5,  1050/ 1094; acc:  42.89; ppl:  26.31; 12210 src tok/s; 4467 tgt tok/s;    182 s elapsed
+Train perplexity: 26.3766
+Train accuracy: 43.0894
+Validation perplexity: 35.3464
+Validation accuracy: 41.4708
+
+Epoch  6,    50/ 1094; acc:  45.68; ppl:  19.99; 12228 src tok/s; 4555 tgt tok/s;      9 s elapsed
+Epoch  6,   100/ 1094; acc:  45.99; ppl:  19.86; 11750 src tok/s; 4513 tgt tok/s;     17 s elapsed
+Epoch  6,   150/ 1094; acc:  45.28; ppl:  20.58; 11386 src tok/s; 4560 tgt tok/s;     26 s elapsed
+Epoch  6,   200/ 1094; acc:  45.16; ppl:  21.02; 12113 src tok/s; 4461 tgt tok/s;     35 s elapsed
+Epoch  6,   250/ 1094; acc:  44.77; ppl:  21.28; 12355 src tok/s; 4392 tgt tok/s;     44 s elapsed
+Epoch  6,   300/ 1094; acc:  45.35; ppl:  20.93; 11358 src tok/s; 4640 tgt tok/s;     52 s elapsed
+Epoch  6,   350/ 1094; acc:  44.12; ppl:  22.37; 12634 src tok/s; 4544 tgt tok/s;     61 s elapsed
+Epoch  6,   400/ 1094; acc:  45.95; ppl:  20.19; 11308 src tok/s; 4715 tgt tok/s;     69 s elapsed
+Epoch  6,   450/ 1094; acc:  44.76; ppl:  21.82; 11840 src tok/s; 4548 tgt tok/s;     78 s elapsed
+Epoch  6,   500/ 1094; acc:  45.67; ppl:  20.92; 12380 src tok/s; 4642 tgt tok/s;     86 s elapsed
+Epoch  6,   550/ 1094; acc:  45.07; ppl:  21.37; 12229 src tok/s; 4573 tgt tok/s;     95 s elapsed
+Epoch  6,   600/ 1094; acc:  45.30; ppl:  20.82; 12039 src tok/s; 4657 tgt tok/s;    103 s elapsed
+Epoch  6,   650/ 1094; acc:  44.99; ppl:  21.58; 11499 src tok/s; 4514 tgt tok/s;    112 s elapsed
+Epoch  6,   700/ 1094; acc:  45.07; ppl:  21.50; 11872 src tok/s; 4482 tgt tok/s;    121 s elapsed
+Epoch  6,   750/ 1094; acc:  45.37; ppl:  21.14; 12715 src tok/s; 4762 tgt tok/s;    129 s elapsed
+Epoch  6,   800/ 1094; acc:  44.79; ppl:  22.22; 12385 src tok/s; 4854 tgt tok/s;    137 s elapsed
+Epoch  6,   850/ 1094; acc:  45.53; ppl:  21.05; 12867 src tok/s; 4731 tgt tok/s;    145 s elapsed
+Epoch  6,   900/ 1094; acc:  45.13; ppl:  21.70; 11925 src tok/s; 4785 tgt tok/s;    154 s elapsed
+Epoch  6,   950/ 1094; acc:  44.97; ppl:  21.46; 12311 src tok/s; 4617 tgt tok/s;    162 s elapsed
+Epoch  6,  1000/ 1094; acc:  45.31; ppl:  21.31; 12481 src tok/s; 4872 tgt tok/s;    170 s elapsed
+Epoch  6,  1050/ 1094; acc:  45.20; ppl:  21.89; 12292 src tok/s; 4933 tgt tok/s;    178 s elapsed
+Train perplexity: 21.2066
+Train accuracy: 45.2138
+Validation perplexity: 31.9179
+Validation accuracy: 42.5243
+
+Epoch  7,    50/ 1094; acc:  47.56; ppl:  16.73; 11751 src tok/s; 4323 tgt tok/s;      9 s elapsed
+Epoch  7,   100/ 1094; acc:  47.35; ppl:  17.08; 11651 src tok/s; 4655 tgt tok/s;     18 s elapsed
+Epoch  7,   150/ 1094; acc:  46.97; ppl:  17.30; 12210 src tok/s; 4512 tgt tok/s;     26 s elapsed
+Epoch  7,   200/ 1094; acc:  47.05; ppl:  17.54; 12312 src tok/s; 4796 tgt tok/s;     34 s elapsed
+Epoch  7,   250/ 1094; acc:  46.90; ppl:  17.58; 11719 src tok/s; 4658 tgt tok/s;     43 s elapsed
+Epoch  7,   300/ 1094; acc:  46.82; ppl:  17.85; 12121 src tok/s; 4448 tgt tok/s;     52 s elapsed
+Epoch  7,   350/ 1094; acc:  46.90; ppl:  17.78; 12027 src tok/s; 4632 tgt tok/s;     60 s elapsed
+Epoch  7,   400/ 1094; acc:  47.07; ppl:  17.68; 12141 src tok/s; 4590 tgt tok/s;     69 s elapsed
+Epoch  7,   450/ 1094; acc:  47.16; ppl:  17.33; 12608 src tok/s; 4542 tgt tok/s;     78 s elapsed
+Epoch  7,   500/ 1094; acc:  47.11; ppl:  17.41; 11564 src tok/s; 4694 tgt tok/s;     86 s elapsed
+Epoch  7,   550/ 1094; acc:  47.21; ppl:  17.61; 11249 src tok/s; 4649 tgt tok/s;     94 s elapsed
+Epoch  7,   600/ 1094; acc:  46.45; ppl:  18.51; 12408 src tok/s; 4462 tgt tok/s;    103 s elapsed
+Epoch  7,   650/ 1094; acc:  46.40; ppl:  18.47; 12089 src tok/s; 4512 tgt tok/s;    112 s elapsed
+Epoch  7,   700/ 1094; acc:  46.45; ppl:  18.28; 11655 src tok/s; 4575 tgt tok/s;    120 s elapsed
+Epoch  7,   750/ 1094; acc:  47.12; ppl:  17.68; 12147 src tok/s; 4490 tgt tok/s;    129 s elapsed
+Epoch  7,   800/ 1094; acc:  46.54; ppl:  18.43; 11460 src tok/s; 4529 tgt tok/s;    138 s elapsed
+Epoch  7,   850/ 1094; acc:  45.71; ppl:  19.23; 11892 src tok/s; 4351 tgt tok/s;    147 s elapsed
+Epoch  7,   900/ 1094; acc:  46.98; ppl:  17.65; 11754 src tok/s; 4659 tgt tok/s;    155 s elapsed
+Epoch  7,   950/ 1094; acc:  45.91; ppl:  19.03; 11179 src tok/s; 4514 tgt tok/s;    164 s elapsed
+Epoch  7,  1000/ 1094; acc:  46.51; ppl:  18.48; 12440 src tok/s; 4485 tgt tok/s;    173 s elapsed
+Epoch  7,  1050/ 1094; acc:  46.70; ppl:  17.91; 10974 src tok/s; 4638 tgt tok/s;    181 s elapsed
+Train perplexity: 17.8963
+Train accuracy: 46.7998
+Validation perplexity: 31.0563
+Validation accuracy: 42.7557
+
+Epoch  8,    50/ 1094; acc:  49.31; ppl:  14.40; 12230 src tok/s; 4467 tgt tok/s;      9 s elapsed
+Epoch  8,   100/ 1094; acc:  49.52; ppl:  14.00; 11285 src tok/s; 4539 tgt tok/s;     18 s elapsed
+Epoch  8,   150/ 1094; acc:  48.98; ppl:  14.48; 12195 src tok/s; 4409 tgt tok/s;     26 s elapsed
+Epoch  8,   200/ 1094; acc:  49.01; ppl:  14.47; 11941 src tok/s; 4739 tgt tok/s;     35 s elapsed
+Epoch  8,   250/ 1094; acc:  48.34; ppl:  15.05; 11997 src tok/s; 4711 tgt tok/s;     43 s elapsed
+Epoch  8,   300/ 1094; acc:  48.47; ppl:  15.32; 12967 src tok/s; 4751 tgt tok/s;     51 s elapsed
+Epoch  8,   350/ 1094; acc:  48.30; ppl:  15.49; 13169 src tok/s; 4881 tgt tok/s;     59 s elapsed
+Epoch  8,   400/ 1094; acc:  48.67; ppl:  15.10; 12491 src tok/s; 5020 tgt tok/s;     67 s elapsed
+Epoch  8,   450/ 1094; acc:  47.85; ppl:  15.79; 13126 src tok/s; 4731 tgt tok/s;     75 s elapsed
+Epoch  8,   500/ 1094; acc:  48.51; ppl:  15.56; 12199 src tok/s; 4957 tgt tok/s;     83 s elapsed
+Epoch  8,   550/ 1094; acc:  48.14; ppl:  15.62; 12710 src tok/s; 4869 tgt tok/s;     91 s elapsed
+Epoch  8,   600/ 1094; acc:  48.01; ppl:  15.67; 12195 src tok/s; 4596 tgt tok/s;    100 s elapsed
+Epoch  8,   650/ 1094; acc:  47.98; ppl:  15.86; 12076 src tok/s; 4744 tgt tok/s;    108 s elapsed
+Epoch  8,   700/ 1094; acc:  47.17; ppl:  16.48; 12372 src tok/s; 4580 tgt tok/s;    117 s elapsed
+Epoch  8,   750/ 1094; acc:  48.11; ppl:  15.76; 11343 src tok/s; 4651 tgt tok/s;    125 s elapsed
+Epoch  8,   800/ 1094; acc:  47.82; ppl:  15.99; 12489 src tok/s; 4557 tgt tok/s;    134 s elapsed
+Epoch  8,   850/ 1094; acc:  48.08; ppl:  15.94; 11766 src tok/s; 4473 tgt tok/s;    143 s elapsed
+Epoch  8,   900/ 1094; acc:  47.02; ppl:  16.85; 12140 src tok/s; 4625 tgt tok/s;    151 s elapsed
+Epoch  8,   950/ 1094; acc:  47.92; ppl:  16.13; 11298 src tok/s; 4432 tgt tok/s;    160 s elapsed
+Epoch  8,  1000/ 1094; acc:  47.71; ppl:  16.08; 11976 src tok/s; 4452 tgt tok/s;    169 s elapsed
+Epoch  8,  1050/ 1094; acc:  47.65; ppl:  16.09; 11957 src tok/s; 4764 tgt tok/s;    177 s elapsed
+Train perplexity: 15.5312
+Train accuracy: 48.2067
+Validation perplexity: 30.2239
+Validation accuracy: 43.0688
+Decaying learning rate to 0.5
+
+Epoch  9,    50/ 1094; acc:  51.97; ppl:  11.58; 11499 src tok/s; 4556 tgt tok/s;      9 s elapsed
+Epoch  9,   100/ 1094; acc:  52.50; ppl:  11.26; 12389 src tok/s; 4585 tgt tok/s;     17 s elapsed
+Epoch  9,   150/ 1094; acc:  52.95; ppl:  11.06; 10938 src tok/s; 4614 tgt tok/s;     26 s elapsed
+Epoch  9,   200/ 1094; acc:  51.90; ppl:  11.55; 12615 src tok/s; 4416 tgt tok/s;     35 s elapsed
+Epoch  9,   250/ 1094; acc:  52.47; ppl:  11.10; 12478 src tok/s; 4428 tgt tok/s;     44 s elapsed
+Epoch  9,   300/ 1094; acc:  52.94; ppl:  10.93; 11343 src tok/s; 4790 tgt tok/s;     52 s elapsed
+Epoch  9,   350/ 1094; acc:  52.11; ppl:  11.43; 13158 src tok/s; 4679 tgt tok/s;     60 s elapsed
+Epoch  9,   400/ 1094; acc:  52.25; ppl:  11.43; 11114 src tok/s; 4583 tgt tok/s;     69 s elapsed
+Epoch  9,   450/ 1094; acc:  52.36; ppl:  11.36; 11732 src tok/s; 4711 tgt tok/s;     77 s elapsed
+Epoch  9,   500/ 1094; acc:  52.09; ppl:  11.45; 12356 src tok/s; 4506 tgt tok/s;     86 s elapsed
+Epoch  9,   550/ 1094; acc:  52.53; ppl:  11.22; 12295 src tok/s; 4838 tgt tok/s;     94 s elapsed
+Epoch  9,   600/ 1094; acc:  52.27; ppl:  11.29; 12433 src tok/s; 4542 tgt tok/s;    103 s elapsed
+Epoch  9,   650/ 1094; acc:  51.72; ppl:  11.56; 12561 src tok/s; 4550 tgt tok/s;    111 s elapsed
+Epoch  9,   700/ 1094; acc:  52.12; ppl:  11.14; 11455 src tok/s; 4633 tgt tok/s;    120 s elapsed
+Epoch  9,   750/ 1094; acc:  52.31; ppl:  11.19; 10862 src tok/s; 4817 tgt tok/s;    128 s elapsed
+Epoch  9,   800/ 1094; acc:  51.65; ppl:  11.83; 13081 src tok/s; 4485 tgt tok/s;    137 s elapsed
+Epoch  9,   850/ 1094; acc:  52.47; ppl:  11.11; 11965 src tok/s; 4617 tgt tok/s;    145 s elapsed
+Epoch  9,   900/ 1094; acc:  52.80; ppl:  11.06; 12437 src tok/s; 4683 tgt tok/s;    154 s elapsed
+Epoch  9,   950/ 1094; acc:  52.61; ppl:  11.26; 11442 src tok/s; 4591 tgt tok/s;    162 s elapsed
+Epoch  9,  1000/ 1094; acc:  52.07; ppl:  11.32; 12726 src tok/s; 4557 tgt tok/s;    171 s elapsed
+Epoch  9,  1050/ 1094; acc:  52.69; ppl:  11.25; 11696 src tok/s; 4664 tgt tok/s;    179 s elapsed
+Train perplexity: 11.3066
+Train accuracy: 52.3089
+Validation perplexity: 27.0558
+Validation accuracy: 44.6906
+Decaying learning rate to 0.25
+
+Epoch 10,    50/ 1094; acc:  54.53; ppl:   9.41; 11922 src tok/s; 4514 tgt tok/s;      9 s elapsed
+Epoch 10,   100/ 1094; acc:  55.92; ppl:   8.77; 11401 src tok/s; 4407 tgt tok/s;     18 s elapsed
+Epoch 10,   150/ 1094; acc:  54.88; ppl:   9.15; 12560 src tok/s; 4459 tgt tok/s;     26 s elapsed
+Epoch 10,   200/ 1094; acc:  56.08; ppl:   8.73; 10945 src tok/s; 4569 tgt tok/s;     35 s elapsed
+Epoch 10,   250/ 1094; acc:  55.04; ppl:   9.23; 12332 src tok/s; 4608 tgt tok/s;     44 s elapsed
+Epoch 10,   300/ 1094; acc:  55.39; ppl:   8.91; 11802 src tok/s; 4634 tgt tok/s;     52 s elapsed
+Epoch 10,   350/ 1094; acc:  54.83; ppl:   9.20; 12451 src tok/s; 4591 tgt tok/s;     61 s elapsed
+Epoch 10,   400/ 1094; acc:  56.19; ppl:   8.54; 11678 src tok/s; 4609 tgt tok/s;     69 s elapsed
+Epoch 10,   450/ 1094; acc:  55.27; ppl:   8.97; 11580 src tok/s; 4732 tgt tok/s;     77 s elapsed
+Epoch 10,   500/ 1094; acc:  55.45; ppl:   9.01; 12933 src tok/s; 4576 tgt tok/s;     86 s elapsed
+Epoch 10,   550/ 1094; acc:  55.00; ppl:   9.35; 13146 src tok/s; 4794 tgt tok/s;     94 s elapsed
+Epoch 10,   600/ 1094; acc:  55.17; ppl:   9.11; 12093 src tok/s; 4855 tgt tok/s;    102 s elapsed
+Epoch 10,   650/ 1094; acc:  54.36; ppl:   9.56; 11996 src tok/s; 4429 tgt tok/s;    111 s elapsed
+Epoch 10,   700/ 1094; acc:  55.56; ppl:   9.08; 11567 src tok/s; 4653 tgt tok/s;    120 s elapsed
+Epoch 10,   750/ 1094; acc:  55.24; ppl:   9.11; 11766 src tok/s; 4669 tgt tok/s;    128 s elapsed
+Epoch 10,   800/ 1094; acc:  54.95; ppl:   9.22; 12348 src tok/s; 4512 tgt tok/s;    137 s elapsed
+Epoch 10,   850/ 1094; acc:  54.58; ppl:   9.35; 12274 src tok/s; 4605 tgt tok/s;    146 s elapsed
+Epoch 10,   900/ 1094; acc:  55.05; ppl:   9.19; 11912 src tok/s; 4623 tgt tok/s;    154 s elapsed
+Epoch 10,   950/ 1094; acc:  54.65; ppl:   9.34; 12254 src tok/s; 4488 tgt tok/s;    163 s elapsed
+Epoch 10,  1000/ 1094; acc:  55.22; ppl:   9.21; 11717 src tok/s; 4692 tgt tok/s;    171 s elapsed
+Epoch 10,  1050/ 1094; acc:  55.27; ppl:   8.87; 11793 src tok/s; 4685 tgt tok/s;    179 s elapsed
+Train perplexity: 9.10871
+Train accuracy: 55.171
+Validation perplexity: 26.4432
+Validation accuracy: 45.4217
+Decaying learning rate to 0.125
+
+Epoch 11,    50/ 1094; acc:  56.84; ppl:   8.09; 11311 src tok/s; 4439 tgt tok/s;      9 s elapsed
+Epoch 11,   100/ 1094; acc:  56.96; ppl:   8.06; 11926 src tok/s; 4427 tgt tok/s;     18 s elapsed
+Epoch 11,   150/ 1094; acc:  57.13; ppl:   8.07; 11020 src tok/s; 4638 tgt tok/s;     26 s elapsed
+Epoch 11,   200/ 1094; acc:  56.66; ppl:   8.15; 12547 src tok/s; 4344 tgt tok/s;     35 s elapsed
+Epoch 11,   250/ 1094; acc:  57.03; ppl:   8.17; 12007 src tok/s; 4510 tgt tok/s;     44 s elapsed
+Epoch 11,   300/ 1094; acc:  57.21; ppl:   7.99; 11232 src tok/s; 4441 tgt tok/s;     53 s elapsed
+Epoch 11,   350/ 1094; acc:  56.52; ppl:   8.33; 12745 src tok/s; 4497 tgt tok/s;     61 s elapsed
+Epoch 11,   400/ 1094; acc:  56.73; ppl:   8.18; 11184 src tok/s; 4585 tgt tok/s;     70 s elapsed
+Epoch 11,   450/ 1094; acc:  56.90; ppl:   8.08; 12313 src tok/s; 4543 tgt tok/s;     79 s elapsed
+Epoch 11,   500/ 1094; acc:  57.44; ppl:   7.76; 11818 src tok/s; 4621 tgt tok/s;     87 s elapsed
+Epoch 11,   550/ 1094; acc:  56.90; ppl:   8.10; 12457 src tok/s; 4710 tgt tok/s;     96 s elapsed
+Epoch 11,   600/ 1094; acc:  57.07; ppl:   8.01; 11976 src tok/s; 4653 tgt tok/s;    104 s elapsed
+Epoch 11,   650/ 1094; acc:  56.96; ppl:   8.05; 11940 src tok/s; 4555 tgt tok/s;    113 s elapsed
+Epoch 11,   700/ 1094; acc:  56.23; ppl:   8.38; 12167 src tok/s; 4618 tgt tok/s;    121 s elapsed
+Epoch 11,   750/ 1094; acc:  57.09; ppl:   7.93; 12466 src tok/s; 4592 tgt tok/s;    130 s elapsed
+Epoch 11,   800/ 1094; acc:  57.49; ppl:   7.89; 11373 src tok/s; 4553 tgt tok/s;    138 s elapsed
+Epoch 11,   850/ 1094; acc:  57.23; ppl:   7.92; 11324 src tok/s; 4707 tgt tok/s;    147 s elapsed
+Epoch 11,   900/ 1094; acc:  56.68; ppl:   8.18; 12810 src tok/s; 4532 tgt tok/s;    155 s elapsed
+Epoch 11,   950/ 1094; acc:  57.51; ppl:   7.80; 11276 src tok/s; 4542 tgt tok/s;    164 s elapsed
+Epoch 11,  1000/ 1094; acc:  56.51; ppl:   8.21; 12139 src tok/s; 4553 tgt tok/s;    173 s elapsed
+Epoch 11,  1050/ 1094; acc:  57.04; ppl:   7.96; 11879 src tok/s; 4528 tgt tok/s;    181 s elapsed
+Train perplexity: 8.07851
+Train accuracy: 56.9303
+Validation perplexity: 26.3283
+Validation accuracy: 45.7071
+Decaying learning rate to 0.0625
+
+Epoch 12,    50/ 1094; acc:  57.41; ppl:   7.70; 12785 src tok/s; 4429 tgt tok/s;      9 s elapsed
+Epoch 12,   100/ 1094; acc:  58.74; ppl:   7.18; 10922 src tok/s; 4659 tgt tok/s;     17 s elapsed
+Epoch 12,   150/ 1094; acc:  58.66; ppl:   7.28; 12091 src tok/s; 4595 tgt tok/s;     26 s elapsed
+Epoch 12,   200/ 1094; acc:  58.44; ppl:   7.25; 12152 src tok/s; 4640 tgt tok/s;     34 s elapsed
+Epoch 12,   250/ 1094; acc:  57.71; ppl:   7.59; 11763 src tok/s; 4632 tgt tok/s;     43 s elapsed
+Epoch 12,   300/ 1094; acc:  57.63; ppl:   7.68; 12350 src tok/s; 4568 tgt tok/s;     51 s elapsed
+Epoch 12,   350/ 1094; acc:  57.97; ppl:   7.51; 12077 src tok/s; 4654 tgt tok/s;     60 s elapsed
+Epoch 12,   400/ 1094; acc:  58.10; ppl:   7.50; 12137 src tok/s; 4523 tgt tok/s;     68 s elapsed
+Epoch 12,   450/ 1094; acc:  57.23; ppl:   7.84; 12976 src tok/s; 4572 tgt tok/s;     77 s elapsed
+Epoch 12,   500/ 1094; acc:  57.99; ppl:   7.53; 11559 src tok/s; 4908 tgt tok/s;     85 s elapsed
+Epoch 12,   550/ 1094; acc:  57.95; ppl:   7.64; 12128 src tok/s; 4628 tgt tok/s;     94 s elapsed
+Epoch 12,   600/ 1094; acc:  57.97; ppl:   7.48; 11663 src tok/s; 4377 tgt tok/s;    103 s elapsed
+Epoch 12,   650/ 1094; acc:  58.18; ppl:   7.52; 12230 src tok/s; 4629 tgt tok/s;    111 s elapsed
+Epoch 12,   700/ 1094; acc:  57.73; ppl:   7.75; 12405 src tok/s; 4787 tgt tok/s;    119 s elapsed
+Epoch 12,   750/ 1094; acc:  57.46; ppl:   7.71; 11854 src tok/s; 4793 tgt tok/s;    128 s elapsed
+Epoch 12,   800/ 1094; acc:  57.93; ppl:   7.58; 12593 src tok/s; 4520 tgt tok/s;    136 s elapsed
+Epoch 12,   850/ 1094; acc:  57.57; ppl:   7.67; 12103 src tok/s; 4578 tgt tok/s;    145 s elapsed
+Epoch 12,   900/ 1094; acc:  57.45; ppl:   7.69; 11653 src tok/s; 4599 tgt tok/s;    153 s elapsed
+Epoch 12,   950/ 1094; acc:  58.28; ppl:   7.32; 11937 src tok/s; 4758 tgt tok/s;    162 s elapsed
+Epoch 12,  1000/ 1094; acc:  57.11; ppl:   7.83; 12273 src tok/s; 4477 tgt tok/s;    170 s elapsed
+Epoch 12,  1050/ 1094; acc:  57.67; ppl:   7.64; 11707 src tok/s; 4557 tgt tok/s;    179 s elapsed
+Train perplexity: 7.56434
+Train accuracy: 57.8647
+Validation perplexity: 26.4054
+Validation accuracy: 45.832
+Decaying learning rate to 0.03125
+
+Epoch 13,    50/ 1094; acc:  58.37; ppl:   7.44; 11747 src tok/s; 4470 tgt tok/s;      9 s elapsed
+Epoch 13,   100/ 1094; acc:  58.46; ppl:   7.41; 11543 src tok/s; 4461 tgt tok/s;     18 s elapsed
+Epoch 13,   150/ 1094; acc:  58.05; ppl:   7.38; 12405 src tok/s; 4602 tgt tok/s;     26 s elapsed
+Epoch 13,   200/ 1094; acc:  58.95; ppl:   7.12; 11702 src tok/s; 4507 tgt tok/s;     35 s elapsed
+Epoch 13,   250/ 1094; acc:  58.18; ppl:   7.43; 12406 src tok/s; 4585 tgt tok/s;     43 s elapsed
+Epoch 13,   300/ 1094; acc:  58.71; ppl:   7.19; 12160 src tok/s; 4819 tgt tok/s;     51 s elapsed
+Epoch 13,   350/ 1094; acc:  58.56; ppl:   7.17; 11676 src tok/s; 4734 tgt tok/s;     60 s elapsed
+Epoch 13,   400/ 1094; acc:  58.51; ppl:   7.22; 12577 src tok/s; 4621 tgt tok/s;     68 s elapsed
+Epoch 13,   450/ 1094; acc:  57.61; ppl:   7.60; 11879 src tok/s; 4539 tgt tok/s;     77 s elapsed
+Epoch 13,   500/ 1094; acc:  58.48; ppl:   7.16; 11885 src tok/s; 4644 tgt tok/s;     85 s elapsed
+Epoch 13,   550/ 1094; acc:  58.11; ppl:   7.24; 12755 src tok/s; 4567 tgt tok/s;     94 s elapsed
+Epoch 13,   600/ 1094; acc:  58.85; ppl:   7.19; 11591 src tok/s; 4711 tgt tok/s;    102 s elapsed
+Epoch 13,   650/ 1094; acc:  58.22; ppl:   7.44; 11432 src tok/s; 4361 tgt tok/s;    111 s elapsed
+Epoch 13,   700/ 1094; acc:  58.23; ppl:   7.29; 11375 src tok/s; 4369 tgt tok/s;    120 s elapsed
+Epoch 13,   750/ 1094; acc:  58.30; ppl:   7.38; 10904 src tok/s; 4247 tgt tok/s;    130 s elapsed
+Epoch 13,   800/ 1094; acc:  58.25; ppl:   7.39; 11868 src tok/s; 4351 tgt tok/s;    139 s elapsed
+Epoch 13,   850/ 1094; acc:  58.70; ppl:   7.01; 11152 src tok/s; 4288 tgt tok/s;    148 s elapsed
+Epoch 13,   900/ 1094; acc:  57.82; ppl:   7.53; 11226 src tok/s; 4265 tgt tok/s;    157 s elapsed
+Epoch 13,   950/ 1094; acc:  58.02; ppl:   7.52; 11734 src tok/s; 4302 tgt tok/s;    166 s elapsed
+Epoch 13,  1000/ 1094; acc:  58.29; ppl:   7.30; 11016 src tok/s; 4339 tgt tok/s;    175 s elapsed
+Epoch 13,  1050/ 1094; acc:  58.27; ppl:   7.42; 11485 src tok/s; 4366 tgt tok/s;    184 s elapsed
+Train perplexity: 7.31524
+Train accuracy: 58.3499
+Validation perplexity: 26.52
+Validation accuracy: 45.7935
+Decaying learning rate to 0.015625
+
+Epoch 14,    50/ 1094; acc:  58.70; ppl:   7.22; 11623 src tok/s; 4345 tgt tok/s;      9 s elapsed
+Epoch 14,   100/ 1094; acc:  59.42; ppl:   6.89; 11371 src tok/s; 4464 tgt tok/s;     18 s elapsed
+Epoch 14,   150/ 1094; acc:  58.46; ppl:   7.19; 11227 src tok/s; 4307 tgt tok/s;     27 s elapsed
+Epoch 14,   200/ 1094; acc:  58.19; ppl:   7.25; 11638 src tok/s; 4373 tgt tok/s;     36 s elapsed
+Epoch 14,   250/ 1094; acc:  57.67; ppl:   7.60; 11387 src tok/s; 4240 tgt tok/s;     45 s elapsed
+Epoch 14,   300/ 1094; acc:  58.95; ppl:   7.05; 10876 src tok/s; 4375 tgt tok/s;     54 s elapsed
+Epoch 14,   350/ 1094; acc:  59.02; ppl:   7.21; 11463 src tok/s; 4310 tgt tok/s;     63 s elapsed
+Epoch 14,   400/ 1094; acc:  58.51; ppl:   7.22; 11116 src tok/s; 4348 tgt tok/s;     73 s elapsed
+Epoch 14,   450/ 1094; acc:  58.40; ppl:   7.17; 11322 src tok/s; 4420 tgt tok/s;     82 s elapsed
+Epoch 14,   500/ 1094; acc:  58.90; ppl:   7.19; 11961 src tok/s; 4381 tgt tok/s;     90 s elapsed
+Epoch 14,   550/ 1094; acc:  58.55; ppl:   7.21; 11175 src tok/s; 4312 tgt tok/s;    100 s elapsed
+Epoch 14,   600/ 1094; acc:  58.41; ppl:   7.31; 11283 src tok/s; 4298 tgt tok/s;    109 s elapsed
+Epoch 14,   650/ 1094; acc:  58.91; ppl:   7.09; 11305 src tok/s; 4340 tgt tok/s;    118 s elapsed
+Epoch 14,   700/ 1094; acc:  58.92; ppl:   7.11; 11092 src tok/s; 4229 tgt tok/s;    127 s elapsed
+Epoch 14,   750/ 1094; acc:  58.72; ppl:   7.19; 10649 src tok/s; 4160 tgt tok/s;    136 s elapsed
+Epoch 14,   800/ 1094; acc:  58.29; ppl:   7.30; 11744 src tok/s; 4319 tgt tok/s;    146 s elapsed
+Epoch 14,   850/ 1094; acc:  58.53; ppl:   7.28; 11838 src tok/s; 4213 tgt tok/s;    155 s elapsed
+Epoch 14,   900/ 1094; acc:  58.79; ppl:   7.14; 10175 src tok/s; 4269 tgt tok/s;    164 s elapsed
+Epoch 14,   950/ 1094; acc:  59.31; ppl:   6.91; 10700 src tok/s; 4327 tgt tok/s;    173 s elapsed
+Epoch 14,  1000/ 1094; acc:  58.84; ppl:   7.11; 12146 src tok/s; 4324 tgt tok/s;    182 s elapsed
+Epoch 14,  1050/ 1094; acc:  58.35; ppl:   7.35; 10984 src tok/s; 4243 tgt tok/s;    191 s elapsed
+Train perplexity: 7.19069
+Train accuracy: 58.6517
+Validation perplexity: 26.5672
+Validation accuracy: 45.7711
+Decaying learning rate to 0.0078125
+
+Epoch 15,    50/ 1094; acc:  58.36; ppl:   7.37; 10830 src tok/s; 4132 tgt tok/s;      9 s elapsed
+Epoch 15,   100/ 1094; acc:  59.03; ppl:   7.10; 11229 src tok/s; 4273 tgt tok/s;     19 s elapsed
+Epoch 15,   150/ 1094; acc:  59.17; ppl:   6.92; 10421 src tok/s; 4398 tgt tok/s;     28 s elapsed
+Epoch 15,   200/ 1094; acc:  58.65; ppl:   7.15; 11982 src tok/s; 4187 tgt tok/s;     37 s elapsed
+Epoch 15,   250/ 1094; acc:  58.85; ppl:   7.06; 10899 src tok/s; 4438 tgt tok/s;     46 s elapsed
+Epoch 15,   300/ 1094; acc:  58.52; ppl:   7.19; 11690 src tok/s; 4229 tgt tok/s;     55 s elapsed
+Epoch 15,   350/ 1094; acc:  58.56; ppl:   7.14; 11239 src tok/s; 4453 tgt tok/s;     64 s elapsed
+Epoch 15,   400/ 1094; acc:  58.28; ppl:   7.27; 11451 src tok/s; 4226 tgt tok/s;     73 s elapsed
+Epoch 15,   450/ 1094; acc:  59.35; ppl:   6.96; 10505 src tok/s; 4441 tgt tok/s;     82 s elapsed
+Epoch 15,   500/ 1094; acc:  58.48; ppl:   7.17; 11870 src tok/s; 4157 tgt tok/s;     92 s elapsed
+Epoch 15,   550/ 1094; acc:  58.38; ppl:   7.25; 11272 src tok/s; 4233 tgt tok/s;    101 s elapsed
+Epoch 15,   600/ 1094; acc:  58.92; ppl:   7.13; 11277 src tok/s; 4343 tgt tok/s;    110 s elapsed
+Epoch 15,   650/ 1094; acc:  58.98; ppl:   6.96; 11638 src tok/s; 4252 tgt tok/s;    119 s elapsed
+Epoch 15,   700/ 1094; acc:  58.73; ppl:   7.23; 10809 src tok/s; 4275 tgt tok/s;    128 s elapsed
+Epoch 15,   750/ 1094; acc:  59.08; ppl:   7.02; 10750 src tok/s; 4474 tgt tok/s;    137 s elapsed
+Epoch 15,   800/ 1094; acc:  58.56; ppl:   7.14; 12459 src tok/s; 4400 tgt tok/s;    146 s elapsed
+Epoch 15,   850/ 1094; acc:  58.21; ppl:   7.36; 11503 src tok/s; 4355 tgt tok/s;    155 s elapsed
+Epoch 15,   900/ 1094; acc:  58.72; ppl:   7.11; 10839 src tok/s; 4213 tgt tok/s;    165 s elapsed
+Epoch 15,   950/ 1094; acc:  59.10; ppl:   7.00; 11163 src tok/s; 4357 tgt tok/s;    174 s elapsed
+Epoch 15,  1000/ 1094; acc:  59.43; ppl:   6.96; 11564 src tok/s; 4294 tgt tok/s;    183 s elapsed
+Epoch 15,  1050/ 1094; acc:  58.59; ppl:   7.22; 11210 src tok/s; 4294 tgt tok/s;    192 s elapsed
+Train perplexity: 7.12341
+Train accuracy: 58.76
+Validation perplexity: 26.6179
+Validation accuracy: 45.7572
+Decaying learning rate to 0.00390625

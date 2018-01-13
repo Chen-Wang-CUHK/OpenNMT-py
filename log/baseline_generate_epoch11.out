@@ -5,3 +5,31 @@ Loading model parameters.
   input = module(input)
 /research/king2/yfgao/pytorch0.3.0_py3.6/lib/python3.6/site-packages/torch/tensor.py:297: UserWarning: other is not broadcastable to self, but they have the same number of elements.  Falling back to deprecated pointwise behavior.
   return self.add_(other)
+PRED AVG SCORE: -0.7420, PRED PPL: 2.1002
+GOLD AVG SCORE: -3.5806, GOLD PPL: 35.8966
+
+>> BLEU = 8.10, 39.1/11.6/5.6/2.9 (BP=0.873, ratio=0.881, hyp_len=121486, ref_len=137927)
+Traceback (most recent call last):
+  File "tools/test_rouge.py", line 55, in <module>
+    results_dict = test_rouge(args.c, args.r)
+  File "tools/test_rouge.py", line 34, in test_rouge
+    r = pyrouge.Rouge155()
+  File "/research/king2/yfgao/pytorch0.3.0_py3.6/lib/python3.6/site-packages/pyrouge/Rouge155.py", line 88, in __init__
+    self.__set_rouge_dir(rouge_dir)
+  File "/research/king2/yfgao/pytorch0.3.0_py3.6/lib/python3.6/site-packages/pyrouge/Rouge155.py", line 402, in __set_rouge_dir
+    self._home_dir = self.__get_rouge_home_dir_from_settings()
+  File "/research/king2/yfgao/pytorch0.3.0_py3.6/lib/python3.6/site-packages/pyrouge/Rouge155.py", line 416, in __get_rouge_home_dir_from_settings
+    with open(self._settings_file) as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/uac/gds/yfgao/.pyrouge/settings.ini'
+Traceback (most recent call last):
+  File "translate.py", line 141, in <module>
+    main()
+  File "translate.py", line 132, in main
+    _report_rouge()
+  File "translate.py", line 47, in _report_rouge
+    shell=True).decode("utf-8")
+  File "/research/king2/yfgao/python3.6/lib/python3.6/subprocess.py", line 336, in check_output
+    **kwargs).stdout
+  File "/research/king2/yfgao/python3.6/lib/python3.6/subprocess.py", line 418, in run
+    output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command 'python tools/test_rouge.py -r /research/king2/yfgao/datasets/nqg_ACL17/tgt-test.txt -c generated/baseline_epoch11.txt' returned non-zero exit status 1.

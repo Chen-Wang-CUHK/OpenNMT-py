@@ -18,6 +18,9 @@ from onmt.modules.WeightNorm import WeightNormConv2d
 from onmt.Models import EncoderBase, MeanEncoder, StdRNNDecoder, \
     RNNDecoderBase, InputFeedRNNDecoder, RNNEncoder, NMTModel
 
+# Yifan added
+from onmt.Models import TF_BiRNNEncoder
+
 from onmt.modules.SRU import check_sru_requirement
 can_use_sru = check_sru_requirement()
 if can_use_sru:
@@ -34,7 +37,8 @@ __all__ = [EncoderBase, MeanEncoder, RNNDecoderBase, InputFeedRNNDecoder,
            TransformerEncoder, TransformerDecoder, Embeddings, Elementwise,
            MatrixTree, WeightNormConv2d, ConvMultiStepAttention,
            CNNEncoder, CNNDecoder, StackedLSTM, StackedGRU,
-           context_gate_factory, CopyGeneratorLossCompute, AudioEncoder]
+           context_gate_factory, CopyGeneratorLossCompute, AudioEncoder,
+           TF_BiRNNEncoder]
 
 if can_use_sru:
     __all__.extend([SRU, check_sru_requirement])

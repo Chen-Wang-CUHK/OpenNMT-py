@@ -16,6 +16,7 @@ from onmt.modules import Embeddings, ImageEncoder, CopyGenerator, \
                          CNNEncoder, CNNDecoder, AudioEncoder
 from onmt.Utils import use_gpu
 
+from onmt.Models import TF_BiRNNEncoder
 
 def make_embeddings(opt, word_dict, feature_dicts, for_encoder=True):
     """
@@ -71,6 +72,18 @@ def make_encoder(opt, embeddings):
         # "rnn" or "brnn"
         return RNNEncoder(opt.rnn_type, opt.brnn, opt.enc_layers,
                           opt.rnn_size, opt.dropout, embeddings)
+
+def make_tf_birnn_encoder(opt, embeddings):
+    """
+    Bi-directional RNN tensorflow like RNN encoder:
+    train two multilayer uni-directional RNN with input seq and inversed seq, then concat them afterwards
+    :param opt:
+    :param embeddings:
+    :return: a tuple of two RNN encoders
+    """
+    return TF_BiRNNEncoder(opt.rnn_type, opt.enc_layers,
+                           opt.rnn_size, opt.dropout, embeddings)
+
 
 
 def make_decoder(opt, embeddings):
@@ -147,7 +160,10 @@ def make_base_model(model_opt, fields, gpu, checkpoint=None):
         feature_dicts = onmt.io.collect_feature_vocabs(fields, 'src')
         src_embeddings = make_embeddings(model_opt, src_dict,
                                          feature_dicts)
-        encoder = make_encoder(model_opt, src_embeddings)
+        if model_opt.birnn_type == "pytorch":
+            encoder = make_encoder(model_opt, src_embeddings)
+        elif model_opt.birnn_type == "tensorflow":
+            encoder = make_tf_birnn_encoder(model_opt, src_embeddings)
     elif model_opt.model_type == "img":
         encoder = ImageEncoder(model_opt.enc_layers,
                                model_opt.brnn,

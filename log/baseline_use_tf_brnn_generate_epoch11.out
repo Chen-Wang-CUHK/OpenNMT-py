@@ -1,0 +1,9 @@
+Loading model parameters.
+/research/king2/yfgao/nqg_attn/onmt/modules/GlobalAttention.py:177: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  align_vectors = self.sm(align.view(batch*targetL, sourceL))
+/research/king2/yfgao/pytorch0.3.0_py3.6/lib/python3.6/site-packages/torch/nn/modules/container.py:67: UserWarning: Implicit dimension choice for log_softmax has been deprecated. Change the call to include dim=X as an argument.
+  input = module(input)
+/research/king2/yfgao/pytorch0.3.0_py3.6/lib/python3.6/site-packages/torch/tensor.py:297: UserWarning: other is not broadcastable to self, but they have the same number of elements.  Falling back to deprecated pointwise behavior.
+  return self.add_(other)
+PRED AVG SCORE: -0.8172, PRED PPL: 2.2642
+GOLD AVG SCORE: -3.6171, GOLD PPL: 37.2298
