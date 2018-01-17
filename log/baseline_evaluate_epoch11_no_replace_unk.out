@@ -1,0 +1,8 @@
+scores: 
+
+Bleu_1: 0.41348
+Bleu_2: 0.24205
+Bleu_3: 0.16034
+Bleu_4: 0.11039
+METEOR: 0.15396
+ROUGE_L: 0.38648

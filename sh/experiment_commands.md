@@ -53,3 +53,9 @@ choose which generated file to evaluate, and then modify sh/baseline_evaluate.sh
 chmod +x sh/*.sh
 ./sh/baseline_use_tf_brnn_evaluate.sh
 ```
+### baseline + without replace unk
+```
+chmod +x sh/*.sh
+./sh/baseline_generate_no_replace_unk.sh
+./sh/baseline_evaluate_no_replace_unk.sh
+```
